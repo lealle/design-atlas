@@ -1,0 +1,1 @@
+{"name":"design-atlas","private":true,"scripts":{"build":"node build.mjs","test":"node --test tests.mjs"},"type":"module"}
