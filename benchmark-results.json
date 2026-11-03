@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-03T08:54:01.673Z",
+  "runtime": "v24.13.0",
+  "platform": "win32",
+  "workload": "100 pages, 20 layouts, 5 type systems; sequential local static generation; no external calls",
+  "runsMs": [
+    109.94809999999998,
+    105.96890000000002,
+    114.1028,
+    120.21879999999999,
+    106.21479999999997
+  ],
+  "bytes": 202541,
+  "guardrails": {
+    "maxBuildMs": 2000,
+    "maxBytes": 1000000,
+    "expectedPages": 100
+  },
+  "checks": {
+    "buildBudget": true,
+    "sizeBudget": true,
+    "pages": true
+  },
+  "sourceHash": "ffc622af6226bf6ad3a04a7917dd28752115b3482b3f4aae21b586ac61737b02",
+  "limitations": "New project: no meaningful before/after speedup. Font network and browser paint timing not included."
+}

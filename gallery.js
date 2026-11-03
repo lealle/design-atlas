@@ -8,7 +8,10 @@ $('#grid').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
 $('#pagination').addEventListener('click',e=>{if(e.target.dataset.page){page=Number(e.target.dataset.page);render();$('#status').scrollIntoView();}});
 $('#favorites').addEventListener('click',()=>{onlyFavorites=!onlyFavorites;$('#favorites').setAttribute('aria-pressed',onlyFavorites);page=1;render();});
 $('#width').addEventListener('change',()=>{$('#grid').classList.toggle('mobile',$('#width').value==='mobile');});
-$('#compare').addEventListener('click',()=>{if(selected.size!==2)return;$('#comparison').innerHTML=[...selected].map(id=>`<iframe title="디자인 ${id} 비교" src="designs/${id}.html?embed=1&mode=${$('#mode').value}"></iframe>`).join('');$('#dialog').showModal();});
+$('#compare').addEventListener('click',()=>{if(selected.size!==2)return;$('#comparison').innerHTML=[...selected].map(id=>`<section class="compare-panel"><h2>${id} / ${data.find(d=>d.id===id).name}</h2><div class="compare-view"><iframe title="디자인 ${id} 비교" src="designs/${id}.html?embed=1&mode=${$('#mode').value}"></iframe></div></section>`).join('');$('#dialog').showModal();fitComparison();});
 $('#close').addEventListener('click',()=>{$('#dialog').close();$('#comparison').innerHTML='';});
 $('#export').addEventListener('click',()=>{const chosen=data.filter(d=>favorites.has(d.id));const blob=new Blob([JSON.stringify({selectedDesigns:chosen,mode:$('#mode').value},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='my-design-selection.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);$('#notice').textContent=`즐겨찾기 ${chosen.length}개를 파일로 저장했습니다.`;});
 render();
+
+function fitComparison(){document.querySelectorAll('.compare-view').forEach(p=>{const f=p.querySelector('iframe'),w=$('#width').value==='mobile'?390:1200,scale=Math.min(1,p.clientWidth/w);f.style.width=w+'px';f.style.height=Math.max(850,p.clientHeight/scale)+'px';f.style.transform='scale('+scale+')';});}
+window.addEventListener('resize',()=>{if($('#dialog').open)fitComparison();});
