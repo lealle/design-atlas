@@ -1,5 +1,7 @@
 # Design Atlas
 
+**[노션 페이지 디자인 12종 + 블록 24종](https://lealle.github.io/design-atlas/notion/index.html)** — 전체 페이지, 블록 체험, Markdown 초안과 구성 가이드. [적용 범위](NOTION.md).
+
 ## 확장 컬렉션
 
 **[체험형 디자인 42개](https://lealle.github.io/design-atlas/experiences/index.html)** · **[카드·입력 폼 24종](https://lealle.github.io/design-atlas/experiences/components.html)**

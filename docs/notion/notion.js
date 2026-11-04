@@ -1,0 +1,98 @@
+const templates=[
+ ['Personal HQ','나만의 시작 페이지','생활','오늘의 할 일과 자주 찾는 페이지를 한곳에.','sage','⌂'],
+ ['Project room','프로젝트 작업실','업무','목표·상태·문서를 나란히 두는 실행 공간.','blue','↗'],
+ ['Quiet journal','조용한 일기장','생활','짧은 질문과 넓은 여백으로 하루를 기록.','sand','✎'],
+ ['Knowledge garden','지식 정원','학습','메모를 주제와 질문으로 연결하는 위키.','sage','⌘'],
+ ['Reading shelf','읽기 서재','학습','책과 아티클을 읽는 단계에 따라 정리.','clay','▥'],
+ ['Content desk','콘텐츠 편집실','업무','아이디어부터 발행까지 흐름이 보이는 지면.','violet','▤'],
+ ['Learning map','학습 로드맵','학습','학습 단계를 펼치고 완료 항목을 확인.','blue','⌁'],
+ ['Meeting notes','회의 기록실','업무','안건·결정·다음 행동을 한 장으로.','sand','≡'],
+ ['Weekly reset','주간 리셋','생활','이번 주의 약속과 회고를 함께 보는 계획.','clay','◷'],
+ ['Portfolio notebook','작업 포트폴리오','창작','작업의 결과와 설명을 편집하는 공개 노트.','ink','↗'],
+ ['Creative archive','영감 수집함','창작','수집 이유를 함께 적는 분류형 아카이브.','violet','◈'],
+ ['Team handbook','팀 핸드북','업무','새로운 사람도 길을 찾는 팀 안내 페이지.','sage','▣']
+];
+const blocks=[
+ ['표지와 페이지 아이콘','구조','cover','페이지 커버 + 아이콘','커버를 추가하고 페이지 아이콘을 지정합니다. 이 예시의 기하학 패턴은 웹 미리보기 표현입니다.'],
+ ['큰 제목과 설명','구조','heading','제목 + 텍스트','제목 아래 한 문장으로 페이지의 목적을 설명합니다.'],
+ ['목차 인덱스','구조','toc','목차 블록','/목차로 헤딩 목록을 연결합니다.'],
+ ['두 열 작업대','구조','columns','2열 배치','블록을 옆으로 드래그하여 열을 만듭니다. 모바일에서는 세로로 쌓입니다.'],
+ ['옆줄 인용문','텍스트','quote','인용 블록','/인용으로 핵심 문장을 강조합니다.'],
+ ['구분선과 섹션','구조','divider','구분선 + 제목','구분선으로 큰 주제를 나누고 소제목을 붙입니다.'],
+ ['안내 콜아웃','안내','callout','콜아웃','/콜아웃을 추가하고 아이콘과 배경색을 선택합니다.'],
+ ['주의 콜아웃','안내','warning','콜아웃','주의할 한 가지와 다음 행동을 함께 적습니다.'],
+ ['접히는 가이드','안내','toggle','토글 목록','/토글 안에 긴 설명을 넣습니다.'],
+ ['빠른 페이지 링크','탐색','links','페이지 링크','/페이지 링크로 기존 페이지를 연결합니다.'],
+ ['북마크 카드','탐색','bookmark','웹 북마크','공개 URL을 붙여넣고 북마크 표시를 선택합니다.'],
+ ['경로 안내','탐색','breadcrumb','이동 경로','/이동 경로로 상위 페이지의 맥락을 보여줍니다.'],
+ ['체크리스트','입력','check','할 일 목록','/할 일로 완료 여부를 표시합니다.'],
+ ['질문형 회고','입력','reflection','제목 + 텍스트','질문별 헤딩을 만든 뒤 답을 작성합니다.'],
+ ['속성 요약','데이터','properties','데이터베이스 속성','상태·날짜·선택 등 필요한 속성만 표시합니다.'],
+ ['단순 표','데이터','table','간단한 표','/표로 내용의 대응 관계를 정리합니다.'],
+ ['작업 보드','데이터','board','데이터베이스 보드 보기','상태 속성으로 그룹을 나눈 보드 보기를 만듭니다.'],
+ ['갤러리 카드','데이터','gallery','데이터베이스 갤러리 보기','카드에 보여줄 속성과 미리보기를 설정합니다.'],
+ ['날짜 중심 목록','데이터','dates','데이터베이스 목록 + 날짜','날짜 속성을 추가하고 날짜 기준으로 정렬합니다. 예시 날짜는 실제 일정이 아닙니다.'],
+ ['진행 체크 요약','데이터','progress','체크박스 + 수식 또는 롤업','웹 예시의 진행률은 즉시 계산됩니다. 노션에서는 DB 속성과 수식/롤업을 별도 설정해야 합니다.'],
+ ['결정 기록','업무','decision','콜아웃 + 글머리 목록','결정·이유·다음 행동의 순서를 통일합니다.'],
+ ['코드 노트','텍스트','code','코드 블록','/코드에서 언어를 지정하고 실제 예시를 붙여넣습니다.'],
+ ['FAQ 묶음','안내','faq','토글 제목','자주 묻는 질문을 토글로 접어두고 필요할 때 엽니다.'],
+ ['페이지 마무리','탐색','footer','구분선 + 페이지 링크','다음에 읽을 페이지와 관련 문서를 연결합니다.']
+];
+const app=document.querySelector('#app'),params=new URLSearchParams(location.search);const pageId=Number(params.get('page'));const blockView=params.get('view')==='blocks';
+const escapeHTML=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const tasks=['페이지 목적 한 문장 적기','필요한 자료 모으기','첫 번째 초안 확인하기'];
+const tag=s=>`<span class="tag">${s}</span>`;
+const checks=(names=tasks)=>`<div class="checks">${names.map(t=>`<label><input type="checkbox"><span>${t}</span></label>`).join('')}</div>`;
+const callout=(text,kind='')=>`<div class="callout ${kind}"><span aria-hidden="true">${kind==='warning'?'!':'↗'}</span><p>${text}</p></div>`;
+const rows=names=>`<div class="page-rows">${names.map((t,i)=>`<details><summary><span>▤</span>${t}<span>↗</span></summary><p>${t}에 필요한 내용과 링크를 작성하는 공간입니다.</p></details>`).join('')}</div>`;
+const gridCards=names=>`<div class="db-gallery">${names.map((t,i)=>`<details class="db-card"><summary><div class="card-cover art-${i%3}"><span>${['◒','╱','⌘'][i%3]}</span></div><strong>${t}</strong>${tag(['초안','진행','검토'][i%3])}</summary><p>수집한 이유와 핵심 내용을 기록합니다. 디자인 시연용 예시입니다.</p></details>`).join('')}</div>`;
+const board=()=>`<div class="db-board">${['아이디어','진행 중','완료'].map((t,i)=>`<section><h3>${tag(t)}</h3><article><strong>${['첫 주제 정리','자료 살펴보기','구성 스케치'][i]}</strong><small>예시 작업</small><button class="move-card">다음 상태 →</button></article></section>`).join('')}</div>`;
+function blockMarkup(key){switch(key){
+case 'cover':return '<div class="sample-cover"><span>FIELD NOTES</span><b>◒</b></div><div class="sample-icon">⌂</div>';
+case 'heading':return '<small>PERSONAL WORKSPACE</small><h2>오늘을 정리하는 곳.</h2><p>필요한 것만 가까이 두세요.</p>';
+case 'toc':return '<nav class="toc"><a href="#sample-section">01. 시작하기</a><a href="#sample-section">02. 자료 모음</a><a href="#sample-section">03. 다음 행동</a></nav><h3 id="sample-section">작게 시작하기</h3>';
+case 'columns':return `<div class="columns"><section><h3>오늘의 집중</h3>${checks(['초안 살펴보기'])}</section><aside class="tinted"><small>REFERENCE</small><p>관련 자료를 곁에 두기.</p></aside></div>`;
+case 'quote':return '<blockquote>좋은 기록은 다음 행동을 가볍게 만든다.<small>디자인 예시 문구</small></blockquote>';
+case 'divider':return '<small>CHAPTER 02</small><hr><h2>새로운 생각을 위한 여백.</h2>';
+case 'callout':return callout('이 페이지는 한 주의 계획을 정리하는 공간입니다.');
+case 'warning':return callout('발행하기 전 사실과 출처를 다시 확인하세요.','warning');
+case 'toggle':return '<details class="toggle"><summary>처음 사용하는 사람을 위한 안내</summary><p>목적을 정하고, 필요한 섹션만 남기세요.</p>'+checks(['목적 확인','다음 행동 정리'])+'</details>';
+case 'links':return rows(['프로젝트 안내','읽을 자료','회의 기록']);
+case 'bookmark':return '<a class="bookmark" href="https://www.notion.com/help" target="_blank" rel="noopener"><div><strong>Notion 도움말</strong><p>페이지와 블록 사용 안내</p><small>notion.com/help ↗</small></div><span>N</span></a>';
+case 'breadcrumb':return '<div class="crumb-demo"><a href="index.html">작업 공간</a> / <a href="?page=4">지식 정원</a> / <strong>노트</strong></div>';
+case 'check':return checks();
+case 'reflection':return '<div class="reflection"><label>오늘 새롭게 알게 된 것은?<textarea rows="2" placeholder="짧게 적어보세요."></textarea></label><label>다음에는 무엇을 바꿀까?<textarea rows="2" placeholder="하나만 선택해 보세요."></textarea></label></div>';
+case 'properties':return '<dl class="properties"><dt>상태</dt><dd>'+tag('진행 중')+'</dd><dt>분류</dt><dd>개인 프로젝트</dd><dt>담당</dt><dd>입력 필요</dd></dl>';
+case 'table':return '<div class="table-wrap"><table><thead><tr><th>항목</th><th>내용</th></tr></thead><tbody><tr><td>목적</td><td>첫 화면 구성 정리</td></tr><tr><td>다음 행동</td><td>필요한 블록 고르기</td></tr></tbody></table></div>';
+case 'board':return board();
+case 'gallery':return gridCards(['읽을 거리','작업 노트','아이디어']);
+case 'dates':return '<div class="date-list"><p><b>MON</b><span>주제 정리</span>'+tag('예시')+'</p><p><b>WED</b><span>초안 검토</span>'+tag('예시')+'</p><p><b>FRI</b><span>주간 회고</span>'+tag('예시')+'</p></div>';
+case 'progress':return '<div class="progress-block">'+checks(['초안','검토','정리'])+'<progress max="3" value="0" aria-label="완료 항목 수"></progress><output>0 / 3</output></div>';
+case 'decision':return callout('결정: 첫 화면은 핵심 정보부터 보여주기.')+'<ul><li>이유: 다음 행동을 쉽게 찾도록</li><li>다음 행동: 섹션 순서 점검</li></ul>';
+case 'code':return '<pre><code>// 기록을 남기는 작은 예시\nconst note = {\n  title: "첫 번째 생각",\n  status: "draft"\n};</code></pre>';
+case 'faq':return '<details class="toggle"><summary>무엇부터 작성하나요?</summary><p>이 페이지의 목적을 한 문장으로 적습니다.</p></details><details class="toggle"><summary>모든 블록이 필요한가요?</summary><p>필요한 블록만 골라 구성하세요.</p></details>';
+case 'footer':return '<hr><div class="page-end"><span>다음에 읽기</span><a href="?page=4">지식 정원 →</a></div>';
+}}
+function setupInteractions(scope){scope.querySelectorAll('.move-card').forEach(b=>b.onclick=()=>{const lane=b.closest('section'),all=[...lane.parentElement.children];all[(all.indexOf(lane)+1)%all.length].append(b.closest('article'));});scope.querySelectorAll('.progress-block input').forEach(i=>i.onchange=()=>{const p=i.closest('.progress-block'),n=p.querySelectorAll('input:checked').length;p.querySelector('progress').value=n;p.querySelector('output').textContent=n+' / 3';});}
+function home(){app.innerHTML=`<section class="intro"><div><small>NOTION PAGE ATELIER / COLLECTION 03</small><h1>생각이 머무는<br><em>페이지를 설계하다.</em></h1><p>대시보드부터 일기장까지, 목적에 따라 달라지는 노션 페이지.<br>전체 구성을 고르고, 필요한 블록을 더해 나만의 공간을 만드세요.</p><div class="intro-links"><a href="?page=1">첫 페이지 살펴보기 ↗</a><a href="?view=blocks">블록 24종 보기 →</a></div></div><div class="intro-art" aria-hidden="true"><div class="paper paper-back"></div><div class="paper"><span>MY SPACE</span><i></i><i></i><div class="paper-cols"><b></b><b></b></div><i></i><i></i></div><span class="art-label">LESS NOISE.<br>MORE ROOM.</span></div></section><div class="catalog-head"><h2>전체 페이지 <span>12</span></h2><div class="filters" aria-label="페이지 분류">${['전체','생활','업무','학습','창작'].map((t,i)=>`<button data-filter="${t}" aria-pressed="${i===0}">${t}</button>`).join('')}</div></div><div class="template-grid">${templates.map((t,i)=>`<a href="?page=${i+1}" class="template-card ${t[4]}" data-category="${t[2]}"><div class="template-thumb"><iframe title="${t[1]} 미리보기" src="?page=${i+1}&embed=1" loading="lazy" tabindex="-1"></iframe></div><div class="template-info"><small>PAGE ${String(i+1).padStart(2,'0')} / ${t[0].toUpperCase()}</small><h3>${t[1]} <span>↗</span></h3><p>${t[3]}</p>${tag(t[2])}</div></a>`).join('')}</div><section class="portability"><small>MADE FOR YOUR NOTION</small><h2>골라보고, 구조부터 가져가세요.</h2><p>페이지마다 Markdown 초안과 구성 가이드를 제공합니다. 색상·열 배치·데이터베이스 보기는 노션에서 직접 설정합니다. 이곳은 독립적인 웹 디자인 전시관이며 실제 노션 워크스페이스는 변경하지 않습니다.</p><a href="https://www.notion.com/help/import-data-into-notion" target="_blank" rel="noopener">Notion 가져오기 안내 ↗</a></section>`;document.querySelectorAll('[data-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('.template-card').forEach(c=>c.hidden=b.dataset.filter!=='전체'&&c.dataset.category!==b.dataset.filter);document.querySelectorAll('[data-filter]').forEach(x=>x.setAttribute('aria-pressed',x===b));});}
+function pageBody(id){switch(id){
+case 1:return `<div class="columns home-cols"><aside><h3>바로가기</h3>${rows(['개인 프로젝트','읽기 목록','일상의 기록'])}<div class="tinted"><small>ONE THING</small><p>오늘 가장 중요한<br>한 가지는 무엇인가요?</p></div></aside><section><h2>오늘의 집중</h2>${checks()}<h2>가까이 두는 공간</h2>${gridCards(['만드는 일','배우는 일','돌보는 일'])}</section></div>`;
+case 2:return `${callout('이번 작업의 목표를 한 문장으로 적어두세요.')}<div class="columns project-cols"><section><h2>작업 흐름</h2>${board()}<h2>프로젝트 문서</h2>${rows(['목표와 범위','설계 노트','검증 기록'])}</section><aside><h3>프로젝트 정보</h3>${blockMarkup('properties')}<h3>다음 행동</h3>${checks(['범위 합의','핵심 동작 확인'])}</aside></div>`;
+case 3:return `<div class="journal"><blockquote>완벽한 하루보다,<br>기억할 한 장면.</blockquote><div class="journal-date">UNDATED / 날짜를 적어주세요</div>${blockMarkup('reflection')}<details class="toggle"><summary>작은 순간 모아두기</summary><textarea aria-label="작은 순간" placeholder="오늘 기억하고 싶은 장면"></textarea></details><div class="journal-line">A LITTLE NOTE, EVERY DAY.</div></div>`;
+case 4:return `<div class="wiki-layout"><aside><small>EXPLORE</small><nav class="toc"><a href="#garden-topics">주제별 탐색</a><a href="#garden-questions">열린 질문</a><a href="#garden-notes">짧은 노트</a></nav></aside><section><h2 id="garden-topics">생각의 가지</h2><div class="topic-grid">${['개발과 설계','배움의 방법','읽기와 쓰기','아이디어'].map(t=>`<details><summary>${t} ↗</summary><p>연결할 노트와 질문을 모아둡니다.</p></details>`).join('')}</div><h2 id="garden-questions">아직 답하지 못한 질문</h2>${blockMarkup('toggle')}<h2 id="garden-notes">작은 발견</h2>${rows(['오늘 이해한 개념','다시 읽을 문장'])}</section></div>`;
+case 5:return `<div class="reading-top"><blockquote>읽은 만큼보다,<br>남긴 생각만큼.</blockquote><aside>${callout('책 이름과 저자는 직접 입력하세요. 아래 카드는 분류 예시입니다.')}</aside></div><h2>서재의 세 칸</h2>${gridCards(['읽고 싶은 책','읽는 중인 책','다시 읽을 책'])}<h2>읽고 남기는 질문</h2>${blockMarkup('reflection')}`;
+case 6:return `<div class="editorial-banner"><small>EDITORIAL WORKSPACE</small><h2>수집하고.<br>쓰고. 다듬고.</h2><span>IDEA → DRAFT → PUBLISH</span></div><h2>콘텐츠 흐름</h2>${board()}<div class="columns"><section><h2>발행 전 체크</h2>${checks(['주장과 출처 확인','제목과 내용 연결','링크 동작 확인'])}</section><aside><h2>아이디어 서랍</h2>${rows(['다음에 쓰고 싶은 이야기','참고 자료'])}</aside></div>`;
+case 7:return `<div class="roadmap">${[['FOUNDATION','기초 다지기',['개념 한 문장으로 설명','작은 예제 실행']],['PRACTICE','직접 만들어보기',['입력과 출력 연결','실패 상황 확인']],['REFLECT','다시 설명하기',['배운 점 기록','다음 질문 정리']]].map((x,i)=>`<section><span class="step-num">0${i+1}</span><div><small>${x[0]}</small><h2>${x[1]}</h2>${checks(x[2])}</div></section>`).join('')}</div>${callout('속도보다 이해의 흔적을 남겨보세요.')}`;
+case 8:return `<div class="meeting-meta"><span>날짜 <b>입력 필요</b></span><span>참석자 <b>입력 필요</b></span><span>주제 <b>입력 필요</b></span></div><div class="columns meeting-cols"><section><h2>01 / 안건</h2>${rows(['논의할 질문','선택이 필요한 부분'])}<h2>02 / 회의 메모</h2><textarea aria-label="회의 메모" placeholder="핵심 논의만 적어주세요." rows="5"></textarea></section><aside><h2>03 / 결정</h2>${blockMarkup('decision')}<h2>04 / 다음 행동</h2>${checks(['담당 정하기','완료 기준 합의'])}</aside></div>`;
+case 9:return `<div class="week-heading"><span>WEEK / __</span><blockquote>새로운 한 주,<br>가벼운 출발.</blockquote></div><div class="week-grid">${['이번 주의 집중','지켜야 할 약속','나를 위한 시간'].map((t,i)=>`<section><small>0${i+1}</small><h3>${t}</h3><textarea aria-label="${t}" placeholder="한 가지만 적어보세요." rows="3"></textarea></section>`).join('')}</div><div class="columns"><section><h2>이번 주 돌아보기</h2>${blockMarkup('reflection')}</section><aside><h2>주간 마무리</h2>${checks(['기록 정리','미완료 일 옮기기','다음 주 준비'])}</aside></div>`;
+case 10:return `<div class="portfolio-statement"><small>SELECTED WORK / DESIGN DEMO</small><h2>문제를 이해하고,<br>과정을 기록합니다.</h2><p>자기소개와 작업 철학을 작성할 자리입니다.</p></div><div class="portfolio-work">${['프로젝트 A','프로젝트 B'].map((t,i)=>`<details><summary><div class="portfolio-art art-${i}"><span>0${i+1}</span></div><h3>${t}<span>↗</span></h3><p>제목과 설명을 직접 입력하세요.</p></summary><h3>문제 → 접근 → 배운 점</h3><p>확인 가능한 작업 과정과 결과를 작성합니다.</p></details>`).join('')}</div><h2>작업에 관하여</h2>${blockMarkup('faq')}`;
+case 11:return `<div class="archive-tools"><input id="archive-search" type="search" aria-label="영감 카드 검색" placeholder="분류 이름으로 검색"><span>예시 자료 · 6개</span></div><div id="archive-cards">${gridCards(['타이포그래피','여백과 구성','색의 조합','글의 구조','제품 흐름','다시 볼 자료'])}</div><h2>수집하는 이유</h2>${callout('무엇이 좋은지 한 문장으로 설명할 수 있을 때 저장해 보세요.')}`;
+case 12:return `${callout('처음 오셨나요? 아래 안내부터 읽어보세요.')}<div class="handbook-layout"><section class="handbook-start"><small>START HERE</small><h2>함께 일하는<br>방식을 기록합니다.</h2>${rows(['팀 소개','첫 주 안내','도움을 요청하는 방법'])}</section><section><h2>일하는 기준</h2>${blockMarkup('faq')}<h2>자료실</h2>${rows(['업무 절차','회의와 기록','용어 모음'])}<h2>확인할 것</h2>${checks(['필요한 문서 찾기','담당자 확인'])}</section></div>`;
+}}
+function markdown(id){const t=templates[id-1];const headings={1:['오늘의 집중','바로가기','개인 프로젝트'],2:['목표와 범위','작업 흐름','프로젝트 문서','검증 기록'],3:['오늘 새롭게 알게 된 것','다음에는 바꾸고 싶은 것','기억할 장면'],4:['주제별 탐색','열린 질문','짧은 노트'],5:['읽고 싶은 책','읽는 중인 책','읽고 남긴 생각'],6:['아이디어','초안','검토','발행 전 체크'],7:['기초 다지기','직접 만들어보기','다시 설명하기'],8:['안건','회의 메모','결정 사항','다음 행동'],9:['이번 주의 집중','약속','나를 위한 시간','주간 회고'],10:['자기소개','프로젝트 A','프로젝트 B','작업에 관하여'],11:['타이포그래피','구성','제품 흐름','수집한 이유'],12:['팀 소개','첫 주 안내','업무 절차','용어 모음']}[id];return `# ${t[1]}\n\n${t[3]}\n\n> 내용과 링크를 직접 채워 사용하는 초안입니다.\n\n`+headings.map(h=>`## ${h}\n\n내용을 작성하세요.\n\n- [ ] 다음 행동 정리\n`).join('\n')+`\n---\n\n구성 가이드: ${t[1]}\n\n1. 제목과 본문을 먼저 가져옵니다.\n2. ${[1,2,4,6,8,9,12].includes(id)?'관련 섹션을 2열로 배치합니다.':'주요 섹션을 위에서 아래로 배치합니다.'}\n3. 필요하면 텍스트를 콜아웃/토글로 바꿉니다.\n4. 보드·갤러리는 별도 데이터베이스 보기로 설정합니다.\n5. 커버와 색상, 아이콘을 직접 적용합니다.\n\nMarkdown에는 열 배치·커버·데이터베이스·웹 효과가 포함되지 않습니다.\n`;}
+function download(name,text){const url=URL.createObjectURL(new Blob([text],{type:'text/markdown;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function renderPage(id){const t=templates[id-1];document.body.classList.add('theme-'+t[4],'page-detail');app.innerHTML=`<div class="preview-toolbar"><a href="index.html">← 전체 페이지</a><span>PAGE ${String(id).padStart(2,'0')} / ${t[0]}</span><button id="download-page">Markdown 초안 받기 ↓</button><button id="guide-toggle" aria-expanded="false">구성 가이드</button></div><aside id="page-guide" hidden><h2>노션에서 이렇게 구성하세요</h2><ol><li>Markdown 파일을 가져와 제목과 내용을 채웁니다.</li><li>섹션을 필요한 순서로 배치하고 열을 만듭니다.</li><li>콜아웃·토글·데이터베이스 보기는 노션에서 별도로 설정합니다.</li></ol><p>커버 패턴과 정교한 테두리·간격은 웹 시각화입니다. 노션에서 동일한 CSS 효과를 적용할 수 있다는 의미가 아닙니다.</p><a href="https://www.notion.com/help/columns-headings-and-dividers" target="_blank" rel="noopener">노션 페이지 배치 안내 ↗</a></aside><div class="notion-window"><div class="notion-crumb">LEALLE / 개인 공간 / ${t[1]}<span>디자인 미리보기</span></div><div class="page-cover cover-${id}"><span>${t[0].toUpperCase()}</span><i></i><b>${t[5]}</b></div><article class="notion-page layout-${id}"><div class="page-icon">${t[5]}</div><small class="page-kicker">${t[0].toUpperCase()} / PAGE ${String(id).padStart(2,'0')}</small><h1>${t[1]}</h1><p class="page-description">${t[3]}</p><div class="page-content">${pageBody(id)}</div><footer><span>내용은 디자인 예시입니다. 실제 정보는 직접 입력하세요.</span><a href="?page=${id%12+1}">다음 페이지 →</a></footer></article></div>`;setupInteractions(app);document.querySelector('#download-page').onclick=()=>download(`notion-page-${String(id).padStart(2,'0')}.md`,markdown(id));document.querySelector('#guide-toggle').onclick=e=>{const on=e.currentTarget.getAttribute('aria-expanded')!=='true';e.currentTarget.setAttribute('aria-expanded',on);document.querySelector('#page-guide').hidden=!on;};if(id===11)document.querySelector('#archive-search').oninput=e=>document.querySelectorAll('#archive-cards .db-card').forEach(c=>c.hidden=!c.textContent.includes(e.target.value.trim()));}
+function showBlocks(){app.innerHTML=`<section class="blocks-intro"><small>BUILDING BLOCKS / 24 STUDIES</small><h1>한 페이지를 만드는<br><em>작은 조각들.</em></h1><p>노션 기본 블록으로 만들 수 있는 구조를 골라보세요.<br>체험 후 ‘만드는 법’을 열면 대응하는 노션 블록과 설정 방법을 볼 수 있습니다.</p></section><div class="block-controls"><input id="block-search" type="search" aria-label="블록 검색" placeholder="콜아웃, 토글, 갤러리…"><select id="block-category" aria-label="블록 분류"><option>전체</option>${[...new Set(blocks.map(b=>b[1]))].map(t=>`<option>${t}</option>`).join('')}</select><span id="block-count" role="status">24개</span></div><div class="block-grid">${blocks.map((b,i)=>`<section class="block-study" data-index="${i}" data-category="${b[1]}"><header><small>BLOCK ${String(i+1).padStart(2,'0')} / ${b[1]}</small><h2>${b[0]}</h2></header><div class="block-preview">${blockMarkup(b[2])}</div><div class="block-foot"><span>${b[3]}</span><button data-guide="${i}">만드는 법 ↗</button></div></section>`).join('')}</div><p id="no-blocks" hidden>일치하는 블록이 없습니다.</p>`;setupInteractions(app);const filter=()=>{const q=document.querySelector('#block-search').value.trim(),c=document.querySelector('#block-category').value;let count=0;document.querySelectorAll('.block-study').forEach(el=>{const b=blocks[+el.dataset.index];el.hidden=!(b.join(' ').includes(q)&&(c==='전체'||b[1]===c));if(!el.hidden)count++;});document.querySelector('#block-count').textContent=count+'개';document.querySelector('#no-blocks').hidden=!!count;};document.querySelector('#block-search').oninput=filter;document.querySelector('#block-category').onchange=filter;document.querySelectorAll('[data-guide]').forEach(b=>b.onclick=()=>{const i=+b.dataset.guide,x=blocks[i];document.querySelector('#dialog-content').innerHTML=`<small>BLOCK ${String(i+1).padStart(2,'0')}</small><h2>${x[0]}</h2><span class="tag">${x[3]}</span><p>${x[4]}</p><p class="muted">이 미리보기의 정확한 간격·모서리·색상은 노션에서 다를 수 있습니다.</p><button id="block-download">블록 구성 메모 받기 ↓</button>`;document.querySelector('#block-download').onclick=()=>download(`notion-block-${String(i+1).padStart(2,'0')}.md`,`# ${x[0]}\n\n노션 블록: ${x[3]}\n\n${x[4]}\n\n내용을 직접 채워 사용하세요.\n`);document.querySelector('#block-dialog').showModal();});}
+document.querySelector('#dialog-close').onclick=()=>document.querySelector('#block-dialog').close();
+if(Number.isInteger(pageId)&&pageId>=1&&pageId<=12)renderPage(pageId);else if(blockView)showBlocks();else home();
+if(params.has('embed'))document.body.classList.add('embed');

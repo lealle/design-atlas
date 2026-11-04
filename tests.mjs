@@ -1,6 +1,10 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+test('Notion collection has a separate entry and portable template download',()=>{
+ const home=fs.readFileSync('docs/experiences/components.html','utf8');assert.ok(home.includes('../notion/index.html'));
+ const notion=fs.readFileSync('docs/notion/index.html','utf8');assert.ok(notion.includes('notion.js'));assert.ok(fs.existsSync('docs/notion/notion.css'));
+});
 test('experience collection is reachable and has 42 individually linked concepts',()=>{
  const home=fs.readFileSync('docs/index.html','utf8');assert.match(home,/experiences\/index.html/);
  const html=fs.readFileSync('docs/experiences/index.html','utf8');

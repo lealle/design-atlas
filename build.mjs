@@ -18,3 +18,9 @@ const gallery=fs.readFileSync('docs/index.html','utf8').replace('<section class=
 fs.writeFileSync('docs/index.html',gallery);
 
 fs.writeFileSync('docs/experiences/components.html',fs.readFileSync('components.html','utf8').replace('components.css',`components.css?v=${hash('components.css')}`).replace('components.js',`components.js?v=${hash('components.js')}`));
+
+fs.mkdirSync('docs/notion',{recursive:true});
+for(const f of ['notion.css','notion.js'])fs.copyFileSync(f,'docs/notion/'+f);
+fs.writeFileSync('docs/notion/index.html',fs.readFileSync('notion.html','utf8').replace('notion.css','notion.css?v='+hash('notion.css')).replace('notion.js','notion.js?v='+hash('notion.js')));
+for(const f of ['docs/experiences/index.html','docs/experiences/components.html'])fs.writeFileSync(f,fs.readFileSync(f,'utf8').replace('</header>','<a href="../notion/index.html" style="font-size:12px">노션 디자인 12 + 24 ↗</a></header>'));
+fs.writeFileSync('docs/index.html',fs.readFileSync('docs/index.html','utf8').replace('</header>','<a href="notion/index.html">노션 페이지 디자인 ↗</a></header>'));
