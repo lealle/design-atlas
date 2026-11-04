@@ -1,5 +1,11 @@
 # Design Atlas
 
+**[새로운 체험형 디자인 12개 열기 →](https://lealle.github.io/design-atlas/experiences/index.html)**
+
+작업실, 잡지, 스크롤 필름, 지식 지도, 프롬프트 실험실, 검색, 가로 전시, 과정 기록, 목록/상세, 활자 포스터, 카드 덱, 독서실. 각각 구성과 실제 조작 방식이 다릅니다. 번호 01–12는 아래 기존 001–100 컬렉션과 구분됩니다. [참고 출처와 동작 안내](REFERENCES.md).
+
+새 컬렉션은 `experience.html`, `experience.css`, `experience.js`에서 구현하며 `node build.mjs`가 `docs/experiences/`로 내보냅니다. 외부 라이브러리와 API 호출 없이 동작합니다. 검색·입력은 브라우저 안에서 처리하고 움직임 줄이기를 지원합니다.
+
 **[100개 디자인 갤러리 열기 →](https://lealle.github.io/design-atlas/)**
 
 메인 페이지, 개발 블로그, 프롬프트 라이브러리를 위한 100개 디자인 조합입니다. **20개 레이아웃 × 5개 타이포그래피·팔레트**로 구성됩니다. 색상뿐 아니라 분할, 탐색 위치, 카드·목록·표현 밀도와 제목 크기가 달라집니다.

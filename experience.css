@@ -29,3 +29,7 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.film-shape{transform:none!important}}body.still *,body.still *:before,body.still *:after{animation:none!important;transition:none!important}html:has(body.still){scroll-behavior:auto}body.still .film-shape{transform:none!important}
 
 .direct-links{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;padding:30px;font-size:12px}
+
+.orbit svg path{opacity:.3;transition:stroke .3s,opacity .3s}.orbit svg path.active-edge{stroke:#c4ec86;stroke-width:3;opacity:1}
+
+h1,h2{word-break:keep-all;overflow-wrap:anywhere}
