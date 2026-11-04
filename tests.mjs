@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-test('experience collection is reachable and has twelve individually linked concepts',()=>{
+test('experience collection is reachable and has 42 individually linked concepts',()=>{
  const home=fs.readFileSync('docs/index.html','utf8');assert.match(home,/experiences\/index.html/);
  const html=fs.readFileSync('docs/experiences/index.html','utf8');
  for(let i=1;i<=42;i++)assert.ok(html.includes(`?scene=${i}`),`missing scene ${i}`);

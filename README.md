@@ -1,6 +1,14 @@
 # Design Atlas
 
-**[새로운 체험형 디자인 12개 열기 →](https://lealle.github.io/design-atlas/experiences/index.html)**
+## 확장 컬렉션
+
+**[체험형 디자인 42개](https://lealle.github.io/design-atlas/experiences/index.html)** · **[카드·입력 폼 24종](https://lealle.github.io/design-atlas/experiences/components.html)**
+
+13–42번을 추가했습니다. 서랍, 티켓, 작업 보드, 노선도, 폴더 트리, 뒤집기, 편집 신문, 다이얼, 픽셀 데스크톱, 확장 패널, 표지, 분할 비교, 핀 보드, 단계 안내, 정렬 표, 방사형 메뉴, 편지, 파일 탐색기, 가변 지면, 주석, 체크 진행률, 요일 큐레이션, 책장, 로컬 명령, 분기 탐색, 장면 슬라이더, 모자이크, 대화 선택, 캔버스, 형태 연구소입니다.
+
+컴포넌트 전시관은 카드 12종과 폼 12종을 각각 구분합니다. 예: “화면 35 + 카드 03 + 폼 05”로 조합을 선택할 수 있습니다. 체험 상태는 화면 내에서만 유지되며 입력을 전송하거나 저장하지 않습니다. 새 30개는 `extra.js`·`extra.css`, 컴포넌트는 `components.html`·`components.js`·`components.css`에서 관리합니다.
+
+**[초기 12개를 포함한 체험 컬렉션 열기 →](https://lealle.github.io/design-atlas/experiences/index.html)**
 
 작업실, 잡지, 스크롤 필름, 지식 지도, 프롬프트 실험실, 검색, 가로 전시, 과정 기록, 목록/상세, 활자 포스터, 카드 덱, 독서실. 각각 구성과 실제 조작 방식이 다릅니다. 번호 01–12는 아래 기존 001–100 컬렉션과 구분됩니다. [참고 출처와 동작 안내](REFERENCES.md).
 

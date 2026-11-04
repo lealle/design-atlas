@@ -46,3 +46,5 @@ document.querySelectorAll('[data-segment]').forEach(b=>b.onclick=()=>{document.q
 document.querySelector('#component-search').oninput=e=>{const hits=['카드','폼','모달'].filter(t=>t.includes(e.target.value.trim()));document.querySelector('#search-results').innerHTML=hits.length?hits.map(t=>'<li>'+t+'</li>').join(''):'<li>검색 결과 없음</li>';};
 document.querySelector('.validate-form').onsubmit=e=>{e.preventDefault();const v=document.querySelector('#valid-title');document.querySelector('#validation-result').textContent=v.value.trim().length>=3?'사용할 수 있는 제목입니다.':'공백을 제외하고 3글자 이상 입력해 주세요.';};
 document.querySelector('#memo').oninput=e=>document.querySelector('#memo-count').textContent=e.target.value.length+' / 160';document.querySelector('#memo-clear').onclick=()=>{document.querySelector('#memo').value='';document.querySelector('#memo-count').textContent='0 / 160';};
+
+document.querySelectorAll('output').forEach(el=>el.setAttribute('aria-live','polite'));

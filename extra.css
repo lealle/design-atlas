@@ -5,3 +5,5 @@
 
 .component-entry{display:block;text-align:center;padding:25px;font-weight:bold}
 .mini iframe{width:1200px;height:1000px;border:0;position:absolute;top:0;left:0;transform:scale(.30);transform-origin:0 0;pointer-events:none;background:#f2f0e9}.embedded .bar,.embedded .scene-nav,.embedded footer,.embedded .direct-links,.embedded .component-entry{display:none}.embedded .scene-intro{padding-top:35px}.embedded .experiment{margin-bottom:0}@media(max-width:600px){.mini iframe{transform:scale(.28)}}
+
+.tickets{grid-template-columns:repeat(2,minmax(0,1fr));min-width:0}.ticket{min-width:0;overflow-wrap:anywhere}.ticket .barcode{letter-spacing:2px;font-size:20px}@media(max-width:600px){.tickets{grid-template-columns:1fr}.ticket{min-height:180px}.ticket .barcode{font-size:18px;letter-spacing:5px}}
