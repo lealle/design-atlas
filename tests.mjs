@@ -1,6 +1,11 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+test('experience collection is reachable and has twelve individually linked concepts',()=>{
+ const home=fs.readFileSync('docs/index.html','utf8');assert.match(home,/experiences\/index.html/);
+ const html=fs.readFileSync('docs/experiences/index.html','utf8');
+ for(let i=1;i<=12;i++)assert.ok(html.includes(`?scene=${i}`));
+});
 test('100 unique selectable designs with 20 layouts and five typography systems',()=>{
  const data=JSON.parse(fs.readFileSync('docs/designs.json'));
  assert.equal(data.length,100);assert.equal(new Set(data.map(d=>d.id)).size,100);
