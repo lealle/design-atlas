@@ -1,5 +1,7 @@
 # Design Atlas
 
+> [통합 개발 자료 허브](https://lealle.github.io/devblog/hub.html)에서 Design Atlas 시안과 체험형 디자인을 DevBlog 기술 문서와 함께 찾을 수 있습니다. 디자인 원본과 즐겨찾기 동작은 이 저장소에서 계속 관리합니다.
+
 **[노션 페이지 디자인 12종 + 블록 24종](https://lealle.github.io/design-atlas/notion/index.html)** — 전체 페이지, 블록 체험, Markdown 초안과 구성 가이드. [적용 범위](NOTION.md).
 
 ## 확장 컬렉션
